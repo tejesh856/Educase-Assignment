@@ -29,7 +29,7 @@ const Signup = () => {
     agencyIsValid
 
   const fullNameError = fullName && !fullNameIsValid ? 'Full name must be at least 2 characters.' : ''
-  const phoneError = phone && !phoneIsValid ? 'Enter a valid phone number (10-15 digits).' : ''
+  const phoneError = phone && !phoneIsValid ? 'Enter a valid phone number (10 digits).' : ''
   const emailError = email && !emailIsValid ? 'Enter a valid email address.' : ''
   const passwordError = password && !passwordIsValid ? 'Password must be at least 8 characters.' : ''
   const companyError = company && !companyIsValid ? 'Company name must be at least 2 characters.' : ''
