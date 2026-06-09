@@ -5,7 +5,14 @@ const Login = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const isFilled = email.trim() !== '' && password.trim() !== ''
+
+  const emailRegex = /^\S+@\S+\.\S+$/
+  const emailIsValid = emailRegex.test(email)
+  const passwordIsValid = password.length >= 8
+  const isFilled = emailIsValid && passwordIsValid
+
+  const emailError = email && !emailIsValid ? 'Enter a valid email address.' : ''
+  const passwordError = password && !passwordIsValid ? 'Password must be at least 8 characters.' : ''
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -32,6 +39,7 @@ const Login = () => {
                 placeholder="Enter your email"
               />
             </label>
+            {emailError ? <p className="text-sm text-red-600 mt-1">{emailError}</p> : null}
           </div>
           <div className="flex flex-col">
             <label className="relative w-full">
@@ -44,10 +52,12 @@ const Login = () => {
                 placeholder="Enter your password"
               />
             </label>
+            {passwordError ? <p className="text-sm text-red-600 mt-1">{passwordError}</p> : null}
           </div>
           <button
             type="submit"
-            className={`px-4 py-3 mt-3 text-center w-full ${isFilled ? 'bg-violet-700 text-white hover:bg-violet-800' : 'bg-gray-300 hover:bg-gray-400 text-white'} rounded`}
+            disabled={!isFilled}
+            className={`px-4 py-3 mt-3 text-center w-full rounded font-semibold ${isFilled ? 'bg-violet-700 text-white hover:bg-violet-800' : 'bg-gray-300 text-gray-600 cursor-not-allowed'}`}
           >
             Login
           </button>

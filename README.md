@@ -14,7 +14,8 @@ A simple React application built with Vite that demonstrates a client-side onboa
 ## Features
 
 - Client-side page routing with React Router
-- Signup and login forms with simple validation
+- Login form with email format and password length validation
+- Signup form with validation for full name, phone, email, password, company, and agency selection
 - Account settings page with profile display
 - Tailwind CSS styling for layout and responsive UI
 

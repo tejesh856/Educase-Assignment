@@ -10,13 +10,30 @@ const Signup = () => {
   const [company, setCompany] = useState('')
   const [agency, setAgency] = useState('')
 
+  const emailRegex = /^\S+@\S+\.\S+$/
+  const phoneRegex = /^[0-9]{10}$/
+
+  const fullNameIsValid = fullName.trim().length >= 2
+  const phoneIsValid = phoneRegex.test(phone.replace(/\s+/g, ''))
+  const emailIsValid = emailRegex.test(email)
+  const passwordIsValid = password.length >= 8
+  const companyIsValid = company.trim().length >= 2
+  const agencyIsValid = agency === 'yes' || agency === 'no'
+
   const isValid =
-    fullName.trim() !== '' &&
-    phone.trim() !== '' &&
-    email.trim() !== '' &&
-    password.trim() !== '' &&
-    company.trim() !== '' &&
-    agency !== ''
+    fullNameIsValid &&
+    phoneIsValid &&
+    emailIsValid &&
+    passwordIsValid &&
+    companyIsValid &&
+    agencyIsValid
+
+  const fullNameError = fullName && !fullNameIsValid ? 'Full name must be at least 2 characters.' : ''
+  const phoneError = phone && !phoneIsValid ? 'Enter a valid phone number (10-15 digits).' : ''
+  const emailError = email && !emailIsValid ? 'Enter a valid email address.' : ''
+  const passwordError = password && !passwordIsValid ? 'Password must be at least 8 characters.' : ''
+  const companyError = company && !companyIsValid ? 'Company name must be at least 2 characters.' : ''
+  const agencyError = !agencyIsValid && (fullName || phone || email || password || company) ? 'Please select whether you are an agency.' : ''
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -41,6 +58,7 @@ const Signup = () => {
                 placeholder="Enter your Full Name"
               />
             </label>
+            {fullNameError ? <p className="text-sm text-red-600 mt-1">{fullNameError}</p> : null}
           </div>
           <div className="flex flex-col">
             <label className="relative w-full">
@@ -53,6 +71,7 @@ const Signup = () => {
                 placeholder="Enter your phone number"
               />
             </label>
+            {phoneError ? <p className="text-sm text-red-600 mt-1">{phoneError}</p> : null}
           </div>
           <div className="flex flex-col">
             <label className="relative w-full">
@@ -65,6 +84,7 @@ const Signup = () => {
                 placeholder="Enter your email"
               />
             </label>
+            {emailError ? <p className="text-sm text-red-600 mt-1">{emailError}</p> : null}
           </div>
           <div className="flex flex-col">
             <label className="relative w-full">
@@ -77,6 +97,7 @@ const Signup = () => {
                 placeholder="Enter your password"
               />
             </label>
+            {passwordError ? <p className="text-sm text-red-600 mt-1">{passwordError}</p> : null}
           </div>
           <div className="flex flex-col">
             <label className="relative w-full">
@@ -89,6 +110,7 @@ const Signup = () => {
                 placeholder="Enter your Company Name"
               />
             </label>
+            {companyError ? <p className="text-sm text-red-600 mt-1">{companyError}</p> : null}
           </div>
           <div className="flex flex-col gap-3">
             <span className="">Are you an Agency?</span>
@@ -122,6 +144,7 @@ const Signup = () => {
                 No
               </label>
             </div>
+            {agencyError ? <p className="text-sm text-red-600 mt-1">{agencyError}</p> : null}
           </div>
           </div>
           <button
